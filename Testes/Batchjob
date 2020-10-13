@@ -13,7 +13,7 @@
 
 ################ Change these parameters according to your requisites
 
-#PBS -l nodes=atlantica14:ppn=16:cluster-Atlantica,walltime=24:00:00
+#PBS -l nodes=grad08:ppn=16:cluster-Grad,walltime=00:05:00
 
 ################ Where:
 ################ nodes = number of nodes requested
@@ -23,7 +23,7 @@
 
 ################ Please, change this e-mail address to yours
 
-#PBS -M user.name@acad.pucrs.br
+#PBS -M gabriel.kurtz@acad.pucrs.br
 
 ################
 
@@ -37,7 +37,7 @@
 
 ################ Please, change this directory to your working dir.
 
-#PBS -d /home/thiago.rocha/exemplos/torque
+#PBS -d /home/pp12708/Programacao-Paralela
 
 ################
 
@@ -63,7 +63,19 @@ echo ################
 
 ############# If running a sequential or openMP program
 
-sleep 1000000000000
+time ./sequencial
+
+export EMP_NUM_THREADS=16
+time ./paralelo
+
+export EMP_NUM_THREADS=8
+time ./paralelo
+
+export EMP_NUM_THREADS=4
+time ./paralelo
+
+export EMP_NUM_THREADS=2
+time ./paralelo
 
 ################
 
