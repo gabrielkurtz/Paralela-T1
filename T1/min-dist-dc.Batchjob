@@ -65,32 +65,32 @@ echo --- Sequencial --- >> saida-dc.txt
 echo --- Sequencial --- >> tempos-dc.txt
 ./min-dist-dc-sequencial >> saida-dc.txt 2>> tempos-dc.txt
 
-################ 2 Nodos
+################ 2 Threads
 export OMP_NUM_THREADS=2
-echo --- 2 Nodos ---
-echo --- 2 Nodos --- >> saida-dc.txt
-echo --- 2 Nodos --- >> tempos-dc.txt
+echo --- 2 Threads ---
+echo --- 2 Threads --- >> saida-dc.txt
+echo --- 2 Threads --- >> tempos-dc.txt
 ./min-dist-dc >> saida-dc.txt 2>> tempos-dc.txt
 
-################ 4 Nodos
+################ 4 Threads
 export OMP_NUM_THREADS=4
-echo --- 4 Nodos ---
-echo --- 4 Nodos --- >> saida-dc.txt
-echo --- 4 Nodos --- >> tempos-dc.txt
+echo --- 4 Threads ---
+echo --- 4 Threads --- >> saida-dc.txt
+echo --- 4 Threads --- >> tempos-dc.txt
 ./min-dist-dc >> saida-dc.txt 2>> tempos-dc.txt
 
-################ 8 Nodos
+################ 8 Threads
 export OMP_NUM_THREADS=8
-echo --- 8 Nodos ---
-echo --- 8 Nodos --- >> saida-dc.txt
-echo --- 8 Nodos --- >> tempos-dc.txt
+echo --- 8 Threads ---
+echo --- 8 Threads --- >> saida-dc.txt
+echo --- 8 Threads --- >> tempos-dc.txt
 ./min-dist-dc >> saida-dc.txt 2>> tempos-dc.txt
 
-################ 16 Nodos
+################ 16 Threads
 export OMP_NUM_THREADS=16
-echo --- 16 Nodos ---
-echo --- 16 Nodos --- >> saida-dc.txt
-echo --- 16 Nodos --- >> tempos-dc.txt
+echo --- 16 Threads ---
+echo --- 16 Threads --- >> saida-dc.txt
+echo --- 16 Threads --- >> tempos-dc.txt
 ./min-dist-dc >> saida-dc.txt 2>> tempos-dc.txt
 
 ################
