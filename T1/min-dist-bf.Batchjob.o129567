@@ -17,7 +17,7 @@ JOB_ID:
 129567
 
 --- Sequencial ---
---- 2 Nodos ---
+--- 2 Threads ---
 
 --------------------------------------
 Running PBS epilogue.user script

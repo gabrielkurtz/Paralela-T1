@@ -17,10 +17,10 @@ JOB_ID:
 129575
 
 --- Sequencial ---
---- 2 Nodos ---
---- 4 Nodos ---
---- 8 Nodos ---
---- 16 Nodos ---
+--- 2 Threads ---
+--- 4 Threads ---
+--- 8 Threads ---
+--- 16 Threads ---
 Final Time is Thu Oct 15 00:19:26 BRT 2020
 
 --------------------------------------
