@@ -60,7 +60,7 @@ double points_min_distance_bf(point_t *points, int size) { /* bf = brute-force *
     double min_d, d;
     min_d = DBL_MAX;
 
-    #pragma omp parallel for private(j,d) schedule(dynamic, 1000)
+    #pragma omp parallel for private(j,d) schedule(dynamic, 200)
     for (i=0; i< size-1; ++i) {
         for (j=i+1; j<size; ++j) {
             d = points_distance_sqr(points+i,points+j);
