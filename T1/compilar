@@ -1,0 +1,12 @@
+#!/bin/bash
+
+g++ min-dist-bf-sequencial.c -o min-dist-bf-sequencial -lm -fopenmp
+g++ min-dist-bf.c -o min-dist-bf -lm -fopenmp
+g++ min-dist-dc-sequencial.c -o min-dist-dc-sequencial -lm -fopenmp
+g++ min-dist-dc.c -o min-dist-dc -lm -fopenmp
+
+
+################
+
+echo Final Time is `date`
+

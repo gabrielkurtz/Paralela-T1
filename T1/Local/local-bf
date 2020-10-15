@@ -1,0 +1,53 @@
+#!/bin/bash
+
+echo Running on host `hostname`
+echo
+echo Initial Time is `date`
+echo
+echo Directory is `pwd`
+echo
+echo ################
+
+############# If running a sequential or openMP program
+
+:> saida-bf.txt ; :> tempos-bf.txt
+
+################ Sequencial
+echo --- Sequencial ---
+echo --- Sequencial --- >> saida-bf.txt
+echo --- Sequencial --- >> tempos-bf.txt
+./min-dist-bf-sequencial >> saida-bf.txt 2>> tempos-bf.txt
+
+################ 2 Nodos
+export OMP_NUM_THREADS=2
+echo --- 2 Nodos ---
+echo --- 2 Nodos --- >> saida-bf.txt
+echo --- 2 Nodos --- >> tempos-bf.txt
+./min-dist-bf >> saida-bf.txt 2>> tempos-bf.txt
+
+################ 4 Nodos
+export OMP_NUM_THREADS=4
+echo --- 4 Nodos ---
+echo --- 4 Nodos --- >> saida-bf.txt
+echo --- 4 Nodos --- >> tempos-bf.txt
+./min-dist-bf >> saida-bf.txt 2>> tempos-bf.txt
+
+################ 8 Nodos
+export OMP_NUM_THREADS=8
+echo --- 8 Nodos ---
+echo --- 8 Nodos --- >> saida-bf.txt
+echo --- 8 Nodos --- >> tempos-bf.txt
+./min-dist-bf >> saida-bf.txt 2>> tempos-bf.txt
+
+################ 16 Nodos
+export OMP_NUM_THREADS=16
+echo --- 16 Nodos ---
+echo --- 16 Nodos --- >> saida-bf.txt
+echo --- 16 Nodos --- >> tempos-bf.txt
+./min-dist-bf >> saida-bf.txt 2>> tempos-bf.txt
+
+
+################
+
+echo Final Time is `date`
+
