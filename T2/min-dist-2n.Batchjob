@@ -13,7 +13,7 @@
 
 ################ Change these parameters according to your requisites
 
-#PBS -l nodes=1:ppn=16:cluster-Grad,walltime=00:20:00
+#PBS -l nodes=2:ppn=16:cluster-Grad,walltime=00:20:00
 
 ################ Where:
 ################ nodes = number of nodes requested
@@ -57,13 +57,25 @@ echo ################
 
 ############# If running a sequential or openMP program
 
-:> saida-dc.txt ; :> tempos-dc.txt
+echo --- Iniciando Execução com 2 Nodos --- >> saida-dc.txt ; >> tempos-dc.txt
 
-################ Sequencial
-echo --- Sequencial ---
-echo --- Sequencial --- >> saida-dc.txt
-echo --- Sequencial --- >> tempos-dc.txt
-./min-dist-sequencial >> saida-dc.txt 2>> tempos-dc.txt
+################ Paralela 15 Processos
+echo --- Execução com 15 Processos em 2 Nodos ---
+echo --- Execução com 15 Processos em 2 Nodos --- >> saida-dc.txt
+echo --- Execução com 15 Processos em 2 Nodos --- >> tempos-dc.txt
+./mpirun -np 15 min-dist-paralelo >> saida-dc.txt 2>> tempos-dc.txt
+
+################ Paralela 31 Processos
+echo --- Execução com 31 Processos em 2 Nodos ---
+echo --- Execução com 31 Processos em 2 Nodos --- >> saida-dc.txt
+echo --- Execução com 31 Processos em 2 Nodos --- >> tempos-dc.txt
+./mpirun -np 31 min-dist-paralelo >> saida-dc.txt 2>> tempos-dc.txt
+
+################ Paralela 63 Processos
+echo --- Execução com 63 Processos em 2 Nodos ---
+echo --- Execução com 63 Processos em 2 Nodos --- >> saida-dc.txt
+echo --- Execução com 63 Processos em 2 Nodos --- >> tempos-dc.txt
+./mpirun -np 63 min-dist-paralelo >> saida-dc.txt 2>> tempos-dc.txt
 
 echo Final Time is `date`
 

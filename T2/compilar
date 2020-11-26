@@ -1,0 +1,8 @@
+#!/bin/bash
+
+mpic++ -o min-dist-sequencial min-dist-sequencial.cpp
+mpic++ -o min-dist-paralelo min-dist-paralelo.cpp
+
+################
+
+echo Final Time is `date`
