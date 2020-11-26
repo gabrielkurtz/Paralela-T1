@@ -185,7 +185,7 @@ int main(int argc, char *argv[]) {
         double elapsed_time_reduzido;
         MPI_Reduce(&elapsed_time, &elapsed_time_reduzido, 1, MPI_DOUBLE, MPI_MAX, raiz, MPI_COMM_WORLD);
         elapsed_time += MPI_Wtime();
-        if(id == raiz) fprintf(stderr,"%d) %d %lf\n",id,i,elapsed_time);
+        if(id == raiz) fprintf(stderr,"%d %lf\n",i,elapsed_time);
         MPI_Barrier(MPI_COMM_WORLD);
     }
 
