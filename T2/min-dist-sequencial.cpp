@@ -120,48 +120,75 @@ int main(int argc, char *argv[]) {
     int i, p, id;
     double elapsed_time;
     
-   int raiz=0;
+    int raiz=0;
     MPI_Init(&argc,&argv);
     MPI_Comm_size(MPI_COMM_WORLD, &p);
     MPI_Comm_rank(MPI_COMM_WORLD, &id);
-    if(id==raiz)
-        printf("\nRAIZ) Comm size: %d\n", p);
-    
-    printf("%d) Comm rank: %d\n", id, id);
+    // if(id==raiz) printf("\n%d) Comm size: %d\n", id, p);
+    MPI_Barrier(MPI_COMM_WORLD);
+    // printf("%d) Comm rank: %d\n", id, id);
 
     points_generate(points,SIZE,11);
     sort(&points[0], &points[SIZE], compX);
     
-    // MPI_Barrier(MPI_COMM_WORLD);
     for (i=START; i<=SIZE; i+=STEP) {
-        
-        MPI_Barrier(MPI_COMM_WORLD);
-        if(id==raiz) printf("%d) ------ Size: %d ------\n", id, i);
-        // MPI_Barrier(MPI_COMM_WORLD);
         elapsed_time = -MPI_Wtime();
+        // if(id==raiz) printf("%d) ------ Size: %d ------\n", id, i);
+        MPI_Barrier(MPI_COMM_WORLD);
 
+        // DIVISÃO
+        // Divide vetor de pontos em setores(bags) de tamanhos "iguais" para cada thread
         int sector_size = i/p;
-        printf("%d) Sector size: %d\n", id, sector_size);
+        // printf("%d) Tamanho setor: %d\n", id, sector_size);
         int start = id*sector_size;
         int end = (i - (p-id-1)*sector_size - 1);
-        printf("%d) Start - End: %d %d\n", id, start, end);
+        // printf("%d) Start - End: %d %d\n", id, start, end);
         
+        // Executa algoritmo recursivo de divisão e conquista no setor alocado
+        // (Resultado nao considera mínimos entre dois pontos de setores diferentes)
         double minDist_divisao = sqrt(points_min_distance_dc(points,border,start,end, id));
         double minDist_divisao_reduzido;
         
-        printf("%d) Minimo Divisao: %.6lf\n", id, minDist_divisao);
-        // MPI_Barrier(MPI_COMM_WORLD);
-        // MPI_Reduce(&minDist_divisao, &minDist_divisao_reduzido, 1, MPI_DOUBLE, MPI_MIN, raiz, MPI_COMM_WORLD);
+        // printf("%d) Minimo Divisao: %.6lf\n", id, minDist_divisao);
+        // Reduz valor do mínimo, informando todas as threads do mínimo encontrado
         MPI_Allreduce(&minDist_divisao, &minDist_divisao_reduzido, 1, MPI_DOUBLE, MPI_MIN, MPI_COMM_WORLD);
-
-        printf("%d) Minimo divisao reduzido: %.6lf\n", id, minDist_divisao_reduzido);
+        // printf("%d) Minimo divisao reduzido: %.6lf\n", id, minDist_divisao_reduzido);
  
-        // double elapsed_time_reduzido;
-        // MPI_Reduce(&elapsed_time, &elapsed_time_reduzido, 1, MPI_DOUBLE, MPI_MIN, raiz, MPI_COMM_WORLD);
+
+        // CONQUISTA
+        double minDist_conquista = minDist_divisao;
+        double minDist_conquista_reduzido = minDist_divisao_reduzido;
+        // Fronteira da esquerda é verificada, por isso não verifica id=0
+        // (Seria fronteira com o início do vetor)
+        if(id != 0) {
+            // Atribui novo limite entre bag da thread e bag da "esquerda"
+            end = start;
+            // Verifica pontos cuja distancia no eixo X sao menores que minimo atual
+            // (Podem gerar novo mínimo com 2 pontos que estavam em bags diferentes)
+            double limite_x_l = points[start].x - minDist_divisao_reduzido;
+            double limite_x_r = points[end].x + minDist_divisao_reduzido;
+            while(points[start].x > limite_x_l && start > 0) start--;
+            while(points[end].x < limite_x_l && end < SIZE-1) end++;
+
+            minDist_conquista = sqrt(points_min_distance_dc(points,border,start,end, id));
+            // printf("%d) Minimo Conquista: %.6lf\n", id, minDist_conquista);
+        }
+
+        MPI_Barrier(MPI_COMM_WORLD);
+        MPI_Allreduce(&minDist_conquista, &minDist_conquista_reduzido, 1, MPI_DOUBLE, MPI_MIN, MPI_COMM_WORLD);
+
+        double resultadoFinal = minDist_conquista_reduzido < minDist_divisao_reduzido ? minDist_conquista_reduzido : minDist_divisao_reduzido;
+        // if(id == raiz) printf("%d) Minimo Conquista reduzido: %.6lf\n", id, minDist_conquista_reduzido);
+        // if(id == raiz) printf("%d) Resultado Final: %.6lf\n", id, resultadoFinal);
+        if(id == raiz) printf("%.6lf\n", resultadoFinal);
+
+        double elapsed_time_reduzido;
+        MPI_Reduce(&elapsed_time, &elapsed_time_reduzido, 1, MPI_DOUBLE, MPI_MAX, raiz, MPI_COMM_WORLD);
         elapsed_time += MPI_Wtime();
-        fprintf(stderr,"%d) %d %lf\n",id, i,elapsed_time);
-        // MPI_Barrier(MPI_COMM_WORLD);
+        if(id == raiz) fprintf(stderr,"%d) %d %lf\n",id,i,elapsed_time);
+        MPI_Barrier(MPI_COMM_WORLD);
     }
+
     MPI_Finalize();
     return 0;
 }
