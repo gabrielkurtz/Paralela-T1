@@ -69,25 +69,25 @@ echo --- Execução Sequencial em 1 Nodo --- >> tempos-dc.txt
 echo --- Execução com 7 Processos em 1 Nodo ---
 echo --- Execução com 7 Processos em 1 Nodo --- >> saida-dc.txt
 echo --- Execução com 7 Processos em 1 Nodo --- >> tempos-dc.txt
-./mpirun -np 7 min-dist-paralelo >> saida-dc.txt 2>> tempos-dc.txt
+mpirun -np 7 min-dist-paralelo >> saida-dc.txt 2>> tempos-dc.txt
 
 ################ Paralela 15 Processos
 echo --- Execução com 15 Processos em 1 Nodo ---
 echo --- Execução com 15 Processos em 1 Nodo --- >> saida-dc.txt
 echo --- Execução com 15 Processos em 1 Nodo --- >> tempos-dc.txt
-./mpirun -np 15 min-dist-paralelo >> saida-dc.txt 2>> tempos-dc.txt
+mpirun -np 15 min-dist-paralelo >> saida-dc.txt 2>> tempos-dc.txt
 
 ################ Paralela 31 Processos
 echo --- Execução com 31 Processos em 1 Nodo ---
 echo --- Execução com 31 Processos em 1 Nodo --- >> saida-dc.txt
 echo --- Execução com 31 Processos em 1 Nodo --- >> tempos-dc.txt
-./mpirun -np 31 min-dist-paralelo >> saida-dc.txt 2>> tempos-dc.txt
+mpirun -np 31 min-dist-paralelo >> saida-dc.txt 2>> tempos-dc.txt
 
 ################ Paralela 63 Processos
 echo --- Execução com 63 Processos em 1 Nodo ---
 echo --- Execução com 63 Processos em 1 Nodo --- >> saida-dc.txt
 echo --- Execução com 63 Processos em 1 Nodo --- >> tempos-dc.txt
-./mpirun -np 63 min-dist-paralelo >> saida-dc.txt 2>> tempos-dc.txt
+mpirun -np 63 min-dist-paralelo >> saida-dc.txt 2>> tempos-dc.txt
 
 echo Final Time is `date`
 
