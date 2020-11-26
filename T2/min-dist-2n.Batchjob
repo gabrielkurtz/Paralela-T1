@@ -63,19 +63,19 @@ echo --- Iniciando Execução com 2 Nodos --- >> saida-dc.txt ; >> tempos-dc.txt
 echo --- Execução com 15 Processos em 2 Nodos ---
 echo --- Execução com 15 Processos em 2 Nodos --- >> saida-dc.txt
 echo --- Execução com 15 Processos em 2 Nodos --- >> tempos-dc.txt
-/mpirun -np 15 min-dist-paralelo >> saida-dc.txt 2>> tempos-dc.txt
+mpirun -np 15 min-dist-paralelo >> saida-dc.txt 2>> tempos-dc.txt
 
 ################ Paralela 31 Processos
 echo --- Execução com 31 Processos em 2 Nodos ---
 echo --- Execução com 31 Processos em 2 Nodos --- >> saida-dc.txt
 echo --- Execução com 31 Processos em 2 Nodos --- >> tempos-dc.txt
-/mpirun -np 31 min-dist-paralelo >> saida-dc.txt 2>> tempos-dc.txt
+mpirun -np 31 min-dist-paralelo >> saida-dc.txt 2>> tempos-dc.txt
 
 ################ Paralela 63 Processos
 echo --- Execução com 63 Processos em 2 Nodos ---
 echo --- Execução com 63 Processos em 2 Nodos --- >> saida-dc.txt
 echo --- Execução com 63 Processos em 2 Nodos --- >> tempos-dc.txt
-/mpirun -np 63 min-dist-paralelo >> saida-dc.txt 2>> tempos-dc.txt
+mpirun -np 63 min-dist-paralelo >> saida-dc.txt 2>> tempos-dc.txt
 
 echo Final Time is `date`
 

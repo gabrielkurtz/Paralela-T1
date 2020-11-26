@@ -278,27 +278,3 @@
 0.966902
 0.966902
 0.966902
---- Iniciando Execução com 2 Nodos ---
---- Execução com 15 Processos em 2 Nodos ---
---- Execução com 31 Processos em 2 Nodos ---
---- Execução com 63 Processos em 2 Nodos ---
---- Iniciando Execução com 2 Nodos ---
---- Execução com 15 Processos em 2 Nodos ---
---- Execução com 31 Processos em 2 Nodos ---
---- Execução com 63 Processos em 2 Nodos ---
---- Iniciando Execução com 4 Nodos ---
---- Execução com 63 Processos em 4 Nodos ---
---- Iniciando Execução com 4 Nodos ---
---- Execução com 63 Processos em 4 Nodos ---
---- Iniciando Execução com 4 Nodos ---
---- Execução com 63 Processos em 4 Nodos ---
---- Iniciando Execução com 2 Nodos ---
---- Execução com 15 Processos em 2 Nodos ---
---- Execução com 31 Processos em 2 Nodos ---
---- Execução com 63 Processos em 2 Nodos ---
---- Iniciando Execução com 2 Nodos ---
---- Execução com 15 Processos em 2 Nodos ---
---- Execução com 31 Processos em 2 Nodos ---
---- Execução com 63 Processos em 2 Nodos ---
---- Iniciando Execução com 4 Nodos ---
---- Execução com 63 Processos em 4 Nodos ---
