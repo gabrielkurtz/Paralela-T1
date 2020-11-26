@@ -1,0 +1,56 @@
+Entrega: Trabalho 2 (Distância Mínima entre Dois Pontos de um Conjunto com Divisão e Conquista em MPI) [Peso: 50% do G1; Data de entrega: 26/11/2020]
+
+O objetivo principal deste trabalho é paralelizar, usando a ferramenta MPI (Message Passing Interface), uma versão sequencial de um programa para determinar, no plano bidimensional, a distância mínima entre dois pares de pontos de um conjunto relativamente grande de pontos, usando a estratégia de divisão e conquista. Este algoritmo, que pode ser usado em diversos contextos, está entre os desafios propostos na 14ª Maratona de Programação Paralela do SBAC-PAD & WSCAD - 2019 (http://lspd.mackenzie.br/marathon/19/problems.html).
+
+Ao mesmo tempo que serão usadas as chamadas de MPI vistas em aula sobre um problema real, será possível também fazer uma reflexão sobre as questões que devem ser levadas em consideração quando um código sequencial é paralelizado, no contexto deste trabalho, em um multicomputador, ou seja, em um cluster com diversos nodos de processamento.
+
+Apesar da distância entre dois pontos ter uma fórmula relativamente simples e bastante conhecida (raiz quadrada da soma do quadrado da diferença entre abcissas e quadrado da diferença entre ordenadas), a sua aplicação sobre um conjunto grande de pontos pode tornar-se inviável. Um algoritmo de força bruta aplicado sobre os pontos do conjunto resulta em uma solução de complexidade O(n2) - na prática, isto significa que o tempo de processamento cresce consideravelmente à medida que cresce o tamanho do conjunto de pontos.
+
+Uma solução alternativa com complexidade O(n log n) consiste no uso da estratégia de divisão e conquista (CLOSEST, 2020). Uma implementação sequencial da estratégia de divisão e conquista aplicada a estre problema encontra-se listada no final desta definição (programa min-dist-dc3.cpp). Um array de 10000000 (dez milhões de pontos) é gerado aleatoriamente e ordenado. A seguir, o algoritmo de divisão e conquista é aplicado sempre a partir do início do array com tamanhos variando de 1000000 (um milhão) até 10000000 (dez milhões), com incremento 1000000 (um milhão).
+
+Sua tarefa é paralelizar o programa min-dist-dc3.cpp gerando uma versão paralela com MPI. Esta versão paralela deve usar MPI e a estratégia de divisão e conquista. Na estratégia divisão e conquista, conforme implementado no código min-dist-dc3.cpp (que está listado no final deste enunciado), o conjunto de pontos é dividido em duas partes, que são processadas e geram dois resultados (divisão). Estes dois resultados são usados no processamento que deve ser realizado para verificar se a distância mínima entre os pontos não está nas extremidades centrais desses dois conjuntos de pontos (conquista). A implementação da estratégia de divisão e conquista na versão sequencial costuma ser implementada usando recursividade. Na implementação paralela com MPI, a estratégia de divisão e conquista deverá envolver 3 tipos de processos:
+
+    processo raiz (que tem os pontos e os distribui para dois processos intermediários e fará uma conquista depois de ter recebido as respostas),
+    processos intermediários (que recebem conjuntos de pontos, e executam a divisão e conquista, repassando, por fim, seu resultado para o processo do qual recebeu os pontos) e
+    processos-folha (que recebem conjuntos de pontos, localizam a menor distância e retornam o resultado para os processos intermediários).
+
+Após executar a versão sequencial em um nodo, a versão paralela deverá ser executada no cluster grad com as seguintes configurações:
+
+    1 nodo, considerando 3 níveis e 7 processos (1 raiz, 2 intermediários e 4 folhas);
+    1 nodo e 2 nodos, considerando 4 níveis e 15 processos (1 raiz, 6 intermediários e 8 folhas);
+    1 nodo e 2 nodos, considerando 5 níveis e 31 processos (1 raiz, 14 intermediários e 16 folhas);
+    1 nodo, 2 nodos e 4 nodos, considerando 6 níveis e 63 processos (1 raiz, 30 intermediários e 32 folhas).
+
+Considerando que a versão sequencial disponibilizada nesta definição se encarrega de variar o número de pontos automaticamente, a versão paralela deverá prever o mesmo comportamento. Isto significa que, ao se iniciar cada execução paralela, os processos que recebem pontos para processar (tanto intermediários quanto folhas) entram em um ciclo de processamento que deve se encerrar quando receberem uma mensagem específica. Ao receber esta mensagem, o processo encerrará seu ciclo de processamento e também a sua execução. Lembre-se de que em uma aplicação MPI, todos os processos devem ser explicitamente encerrados quando a aplicação termina.
+
+Tabelas com resultados são opcionais, mas devem ser exibidos gráficos que mostrem a variação dos tempos de execução à medida que se varia o tamanho do conjunto de pontos, bem como gráficos de speed-up e eficiência para as versões paralelas (também com variação no conjunto de pontos. Em relação a isto é importante perceber que o programa gera resultados na saída padrão (stdout) e tempos na saída de erro padrão (stderr), assim será possível separar estas duas informações. Na linha de comandos, pode-se, por exemplo, usar:
+
+mpirun -np 7 ./min-dist-dc-mpi 1> saida-dc-mpi.txt 2> tempos-dc-mpi.txt
+
+Este comportamento, que está implementado no programa disponibilizado neste enunciado, deve ser mantido. As saídas que contêm os resultados devem ser usadas para verificar a validade da execução das versões paralelas (qualquer execução paralela deve sempre gerar o mesmo resultado que a versão sequencial). As saídas que contêm os resultados de tempo devem ser usadas para gerar os gráficos.
+
+Executar cada versão uma única vez pode gerar resultados que contenham oscilações indesejáveis que causam picos inesperados nos gráficos. Por isso, é importante que cada curva (até mesmo para a versão sequencial) seja o resultado de mais de uma execução. Sugere-se no mínimo 3 execuções para cada teste, tomando o valor mínimo de tempo para cada configuração de pontos. O número de execuções deve ser explicitamente documentado no relatório (artigo).
+
+Cada aluno ou grupo (de no máximo 2 integrantes) deve entregar um relatório em PDF (Portable Document Format) escrito usando o template de artigo disponibilizado no moodle, incluindo:
+
+    contextualização sucinta,
+    descrição dos testes realizados,
+    descrição dos processadores utilizados,
+    resultados obtidos (gráficos mostrando os resultados de várias execuções - considerando tempo, speed-up e eficiência em gráficos onde mostra-se o comportamento destas variáveis à medida que se varia o número de pontos),
+    análise dos resultados (indicando qual configuração obteve os melhores resultados, com razões prováveis para isto, incluindo análise do número de horas máquina usadas pelo grupo no LAD (Laboratório de Alto Desempenho) da PUCRS (Pontifícia Universidade Católica do Rio Grande do Sul) durante o desenvolvimento do trabalho e também análise do balanceamento da carga na execução do programa paralelo),
+    conclusões e
+    referência utilizadas (e citadas no texto).
+
+Na sala de entrega do moodle deverá ser submetido um arquivo compactado no formato ZIP incluindo artigo em PDF, código-fonte e demais arquivos necessários à compilação e execução.
+
+Serão avaliados com nota mínima (ZERO), os trabalhos que:
+
+    tiverem sido realizados por mais do que dois integrantes;
+    tiverem sido realizados por grupos cujos integrantes NÃO tiverem sido definidos no tópico "Definição dos grupos para o Trabalho 2", do fórum de discussão da seção "Atividades Avaliativas" do moodle desta disciplina, em até uma semana após a divulgação do enunciado do trabalho;
+    NÃO forem entregues dentro do prazo;
+    NÃO forem submetidos pelo moodle através da respectiva sala de entrega do Trabalho 2;
+    NÃO entregarem o relatório em formato de artigo;
+    NÃO tiverem submetido os códigos-fontes utilizados (a versão paralela usando MPI deve compilar e gerar um resultado coerente);
+    NÃO tiverem feito a execução nos nodos de processamento do cluster grad do LAD da PUCRS, usando o comando qsub (como orientado em aula);
+    contiverem resultados forjados, ou seja, que NÃO tenham sido obtidos através de execução no cluster grad pelos próprios alunos do grupo;
+    contiverem código ou texto plagiado.
