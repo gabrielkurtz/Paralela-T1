@@ -122,16 +122,29 @@ int main(int argc, char *argv[]) {
     MPI_Init(&argc,&argv);
     MPI_Comm_size(MPI_COMM_WORLD, &p);
     MPI_Comm_rank(MPI_COMM_WORLD, &id);
+    if(id==0)
+        printf("\nRAIZ) Comm size: %d\n", p);
+    
+    printf("%d) Comm rank: %d\n", id, id);
+
     if (id == 0) {
        points_generate(points,SIZE,11);
        sort(&points[0], &points[SIZE], compX);
     }
     MPI_Barrier(MPI_COMM_WORLD);
     for (i=START; i<=SIZE; i+=STEP) {
+        
+        MPI_Barrier(MPI_COMM_WORLD);
+        int sector_size = i/p;
+        printf("%d) Sector size: %d\n", id, sector_size);
+        int start = id*sector_size;
+        int end = (i - (p-id-1)*sector_size - 1);
+        printf("%d) Start - End: %d %d\n", id, start, end);
         elapsed_time = -MPI_Wtime();
-        printf("%.6lf\n", sqrt(points_min_distance_dc(points,border,0,i-1)));
+        // printf("%.6lf\n", sqrt(points_min_distance_dc(points,border,0,i-1)));
+        printf("%d) %.6lf\n", id, sqrt(points_min_distance_dc(points,border,start,end)));
         elapsed_time += MPI_Wtime();  
-        fprintf(stderr,"%d %lf\n",i,elapsed_time);
+        fprintf(stderr,"%d) %d %lf\n",id, i,elapsed_time);
     }
     MPI_Finalize();
     return 0;
