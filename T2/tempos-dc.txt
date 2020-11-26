@@ -278,3 +278,35 @@
 0) 8000000 2.139714
 0) 9000000 2.373852
 0) 10000000 2.679543
+--- Execução com 15 Processos em 2 Nodos ---
+/var/spool/torque/mom_priv/jobs/131126.SC: line 66: /mpirun: No such file or directory
+--- Execução com 31 Processos em 2 Nodos ---
+/var/spool/torque/mom_priv/jobs/131126.SC: line 72: /mpirun: No such file or directory
+--- Execução com 63 Processos em 2 Nodos ---
+/var/spool/torque/mom_priv/jobs/131126.SC: line 78: /mpirun: No such file or directory
+--- Execução com 15 Processos em 2 Nodos ---
+/var/spool/torque/mom_priv/jobs/131131.SC: line 66: /mpirun: No such file or directory
+--- Execução com 31 Processos em 2 Nodos ---
+/var/spool/torque/mom_priv/jobs/131131.SC: line 72: /mpirun: No such file or directory
+--- Execução com 63 Processos em 2 Nodos ---
+/var/spool/torque/mom_priv/jobs/131131.SC: line 78: /mpirun: No such file or directory
+--- Execução com 63 Processos em 4 Nodos ---
+/var/spool/torque/mom_priv/jobs/131127.SC: line 66: /mpirun: No such file or directory
+--- Execução com 63 Processos em 4 Nodos ---
+/var/spool/torque/mom_priv/jobs/131132.SC: line 66: /mpirun: No such file or directory
+--- Execução com 63 Processos em 4 Nodos ---
+/var/spool/torque/mom_priv/jobs/131136.SC: line 66: /mpirun: No such file or directory
+--- Execução com 15 Processos em 2 Nodos ---
+/var/spool/torque/mom_priv/jobs/131137.SC: line 66: /mpirun: No such file or directory
+--- Execução com 31 Processos em 2 Nodos ---
+/var/spool/torque/mom_priv/jobs/131137.SC: line 72: /mpirun: No such file or directory
+--- Execução com 63 Processos em 2 Nodos ---
+/var/spool/torque/mom_priv/jobs/131137.SC: line 78: /mpirun: No such file or directory
+--- Execução com 15 Processos em 2 Nodos ---
+/var/spool/torque/mom_priv/jobs/131138.SC: line 66: /mpirun: No such file or directory
+--- Execução com 31 Processos em 2 Nodos ---
+/var/spool/torque/mom_priv/jobs/131138.SC: line 72: /mpirun: No such file or directory
+--- Execução com 63 Processos em 2 Nodos ---
+/var/spool/torque/mom_priv/jobs/131138.SC: line 78: /mpirun: No such file or directory
+--- Execução com 63 Processos em 4 Nodos ---
+/var/spool/torque/mom_priv/jobs/131139.SC: line 66: /mpirun: No such file or directory
