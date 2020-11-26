@@ -1,0 +1,16 @@
+--- Iniciando Execução com 1 Nodo ---
+--- Execução Sequencial em 1 Nodo ---
+10.579761
+3.696738
+3.696738
+1.042494
+1.042494
+1.042494
+1.042494
+0.966902
+0.966902
+0.966902
+--- Execução com 7 Processos em 1 Nodo ---
+--- Execução com 15 Processos em 1 Nodo ---
+--- Execução com 31 Processos em 1 Nodo ---
+--- Execução com 63 Processos em 1 Nodo ---

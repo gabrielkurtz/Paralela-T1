@@ -1,0 +1,20 @@
+--- Execução Sequencial em 1 Nodo ---
+[grad07:21528] mca: base: component_find: unable to open /usr/local/openmpi/openmpi-1.4.5/lib/openmpi/mca_btl_openib: perhaps a missing symbol, or compiled for a different version of Open MPI? (ignored)
+1000000 2.188831
+2000000 4.309363
+3000000 7.124059
+4000000 8.590001
+5000000 11.195902
+6000000 14.222598
+7000000 14.812626
+8000000 17.122953
+9000000 19.661501
+10000000 22.358312
+--- Execução com 7 Processos em 1 Nodo ---
+/var/spool/torque/mom_priv/jobs/131121.SC: line 72: ./mpirun: No such file or directory
+--- Execução com 15 Processos em 1 Nodo ---
+/var/spool/torque/mom_priv/jobs/131121.SC: line 78: ./mpirun: No such file or directory
+--- Execução com 31 Processos em 1 Nodo ---
+/var/spool/torque/mom_priv/jobs/131121.SC: line 84: ./mpirun: No such file or directory
+--- Execução com 63 Processos em 1 Nodo ---
+/var/spool/torque/mom_priv/jobs/131121.SC: line 90: ./mpirun: No such file or directory
