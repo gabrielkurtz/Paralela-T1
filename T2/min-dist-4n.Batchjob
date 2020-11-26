@@ -63,7 +63,7 @@ echo --- Iniciando Execução com 4 Nodos --- >> saida-dc.txt ; >> tempos-dc.txt
 echo --- Execução com 63 Processos em 4 Nodos ---
 echo --- Execução com 63 Processos em 4 Nodos --- >> saida-dc.txt
 echo --- Execução com 63 Processos em 4 Nodos --- >> tempos-dc.txt
-./mpirun -np 63 min-dist-paralelo >> saida-dc.txt 2>> tempos-dc.txt
+/mpirun -np 63 min-dist-paralelo >> saida-dc.txt 2>> tempos-dc.txt
 
 echo Final Time is `date`
 
