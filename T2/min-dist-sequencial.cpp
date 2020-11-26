@@ -73,7 +73,7 @@ double points_distance_sqr(point_t *p1, point_t *p2) {
     return dx*dx + dy*dy;
 }
 
-double points_min_distance_dc(point_t *point,point_t *border,int l, int r) {
+double points_min_distance_dc(point_t *point,point_t *border,int l, int r, int id) {
     double minDist = DBL_MAX;
     double dist;
     int i, j;
@@ -90,8 +90,9 @@ double points_min_distance_dc(point_t *point,point_t *border,int l, int r) {
     }
 
     int m = (l+r)/2;
-    double dL = points_min_distance_dc(point,border,l,m);
-    double dR = points_min_distance_dc(point,border,m,r);
+    double dL = points_min_distance_dc(point,border,l,m, id);
+    double dR = points_min_distance_dc(point,border,m,r, id);
+    // printf("%d) dL - dR: %.2lf %.2lf\n", id, dL, dR);
     minDist = (dL < dR ? dL : dR);
 
     int k = l;
@@ -118,33 +119,48 @@ double points_min_distance_dc(point_t *point,point_t *border,int l, int r) {
 int main(int argc, char *argv[]) {
     int i, p, id;
     double elapsed_time;
-   
+    
+   int raiz=0;
     MPI_Init(&argc,&argv);
     MPI_Comm_size(MPI_COMM_WORLD, &p);
     MPI_Comm_rank(MPI_COMM_WORLD, &id);
-    if(id==0)
+    if(id==raiz)
         printf("\nRAIZ) Comm size: %d\n", p);
     
     printf("%d) Comm rank: %d\n", id, id);
 
-    if (id == 0) {
-       points_generate(points,SIZE,11);
-       sort(&points[0], &points[SIZE], compX);
-    }
-    MPI_Barrier(MPI_COMM_WORLD);
+    points_generate(points,SIZE,11);
+    sort(&points[0], &points[SIZE], compX);
+    
+    // MPI_Barrier(MPI_COMM_WORLD);
     for (i=START; i<=SIZE; i+=STEP) {
         
         MPI_Barrier(MPI_COMM_WORLD);
+        if(id==raiz) printf("%d) ------ Size: %d ------\n", id, i);
+        // MPI_Barrier(MPI_COMM_WORLD);
+        elapsed_time = -MPI_Wtime();
+
         int sector_size = i/p;
         printf("%d) Sector size: %d\n", id, sector_size);
         int start = id*sector_size;
         int end = (i - (p-id-1)*sector_size - 1);
         printf("%d) Start - End: %d %d\n", id, start, end);
-        elapsed_time = -MPI_Wtime();
-        // printf("%.6lf\n", sqrt(points_min_distance_dc(points,border,0,i-1)));
-        printf("%d) %.6lf\n", id, sqrt(points_min_distance_dc(points,border,start,end)));
-        elapsed_time += MPI_Wtime();  
+        
+        double minDist_divisao = sqrt(points_min_distance_dc(points,border,start,end, id));
+        double minDist_divisao_reduzido;
+        
+        printf("%d) Minimo Divisao: %.6lf\n", id, minDist_divisao);
+        // MPI_Barrier(MPI_COMM_WORLD);
+        // MPI_Reduce(&minDist_divisao, &minDist_divisao_reduzido, 1, MPI_DOUBLE, MPI_MIN, raiz, MPI_COMM_WORLD);
+        MPI_Allreduce(&minDist_divisao, &minDist_divisao_reduzido, 1, MPI_DOUBLE, MPI_MIN, MPI_COMM_WORLD);
+
+        printf("%d) Minimo divisao reduzido: %.6lf\n", id, minDist_divisao_reduzido);
+ 
+        // double elapsed_time_reduzido;
+        // MPI_Reduce(&elapsed_time, &elapsed_time_reduzido, 1, MPI_DOUBLE, MPI_MIN, raiz, MPI_COMM_WORLD);
+        elapsed_time += MPI_Wtime();
         fprintf(stderr,"%d) %d %lf\n",id, i,elapsed_time);
+        // MPI_Barrier(MPI_COMM_WORLD);
     }
     MPI_Finalize();
     return 0;
